@@ -45,14 +45,20 @@ async def start_mcp():
     global _mcp_process
     mcp_dir = BASE_DIR / "israel-drugs-mcp-server"
     try:
+        import shutil
+        node_bin = shutil.which("node")
+        if not node_bin:
+            print("Warning: node not found, MCP server will not start")
+            return
         _mcp_process = subprocess.Popen(
-            ["node", "dist/server.js", "--http"],
+            f"{node_bin} dist/server.js --http",
             cwd=str(mcp_dir),
+            shell=True,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         )
-        await asyncio.sleep(2)  # wait for MCP to be ready
-        print("MCP server started")
+        await asyncio.sleep(2)
+        print(f"MCP server started using {node_bin}")
     except Exception as e:
         print(f"Warning: Could not start MCP server: {e}")
 

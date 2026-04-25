@@ -7,5 +7,8 @@ cmds = [
   "bash -c 'cd israel-drugs-mcp-server && npm install && npm run build'"
 ]
 
+[phases.build]
+cmds = []
+
 [start]
 cmd = "uvicorn main:app --host 0.0.0.0 --port $PORT"
