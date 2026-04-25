@@ -1,7 +1,4 @@
 import uuid
-import asyncio
-import subprocess
-import sys
 import os
 from datetime import datetime
 from typing import Optional
@@ -37,35 +34,6 @@ BASE_DIR = Path(__file__).parent
 async def serve_app():
     return FileResponse(BASE_DIR / "index.html")
 
-# ── Auto-start MCP server ──────────────────────────────────────────────────────
-_mcp_process = None
-
-@app.on_event("startup")
-async def start_mcp():
-    global _mcp_process
-    mcp_dir = BASE_DIR / "israel-drugs-mcp-server"
-    try:
-        import shutil
-        node_bin = shutil.which("node")
-        if not node_bin:
-            print("Warning: node not found, MCP server will not start")
-            return
-        _mcp_process = subprocess.Popen(
-            f"{node_bin} dist/server.js --http",
-            cwd=str(mcp_dir),
-            shell=True,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
-        await asyncio.sleep(2)
-        print(f"MCP server started using {node_bin}")
-    except Exception as e:
-        print(f"Warning: Could not start MCP server: {e}")
-
-@app.on_event("shutdown")
-async def stop_mcp():
-    if _mcp_process:
-        _mcp_process.terminate()
 
 # ── Session store ──────────────────────────────────────────────────────────────
 _sessions: dict[str, dict] = {}
