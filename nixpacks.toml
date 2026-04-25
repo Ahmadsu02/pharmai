@@ -1,10 +1,10 @@
 [phases.setup]
-nixPkgs = ["nodejs_20", "python312"]
+nixPkgs = ["nodejs_20", "python313"]
 
 [phases.install]
 cmds = [
   "pip install -r requirements.txt",
-  "cd israel-drugs-mcp-server && npm install --omit=dev"
+  "bash -c 'cd israel-drugs-mcp-server && npm install && npm run build'"
 ]
 
 [start]
