@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip show *)",
+      "Bash(python -c \"from fda_service import get_drug_fda_info, check_interaction; from ai_service import chat_with_context; import main; print\\('OK'\\)\")"
+    ]
+  }
+}

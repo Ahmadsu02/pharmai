@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PharmAI — تسجيل الدخول</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
+
+    :root {
+      --primary: #0ea5e9;
+      --primary-dark: #0284c7;
+      --bg: #0f172a;
+      --bg2: #1e293b;
+      --bg3: #334155;
+      --border: rgba(255,255,255,0.08);
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --green: #10b981;
+      --red: #ef4444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .logo-icon {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, #0ea5e9, #10b981);
+      border-radius: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+      box-shadow: 0 0 30px rgba(14,165,233,0.4);
+    }
+
+    .logo h1 {
+      font-size: 1.5rem; font-weight: 800;
+      background: linear-gradient(90deg, #fff, #94d2f7);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .logo p { color: var(--text-muted); font-size: 0.85rem; margin-top: 4px; }
+
+    .tabs {
+      display: flex;
+      background: var(--bg3);
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 28px;
+      gap: 4px;
+    }
+
+    .tab {
+      flex: 1; padding: 9px; border: none; background: transparent;
+      color: var(--text-muted); font-family: 'Tajawal', sans-serif;
+      font-size: 0.9rem; cursor: pointer; border-radius: 7px;
+      transition: all 0.2s;
+    }
+
+    .tab.active {
+      background: var(--bg2);
+      color: var(--text);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .form-group { margin-bottom: 18px; }
+
+    label {
+      display: block; font-size: 0.85rem;
+      color: var(--text-muted); margin-bottom: 7px;
+    }
+
+    input {
+      width: 100%; padding: 12px 14px;
+      background: var(--bg3); border: 1.5px solid var(--border);
+      border-radius: 10px; color: var(--text);
+      font-family: 'Tajawal', sans-serif; font-size: 0.95rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(14,165,233,0.15);
+    }
+
+    .btn {
+      width: 100%; padding: 13px;
+      background: linear-gradient(135deg, #0ea5e9, #0284c7);
+      border: none; border-radius: 10px;
+      color: white; font-family: 'Tajawal', sans-serif;
+      font-size: 1rem; font-weight: 600; cursor: pointer;
+      transition: all 0.2s; margin-top: 6px;
+    }
+
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(14,165,233,0.35); }
+    .btn:active { transform: translateY(0); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .msg {
+      padding: 11px 14px; border-radius: 9px;
+      font-size: 0.88rem; margin-bottom: 16px;
+      display: none;
+    }
+
+    .msg.error { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; display: block; }
+    .msg.success { background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3); color: #6ee7b7; display: block; }
+
+    .divider {
+      text-align: center; color: var(--text-muted);
+      font-size: 0.8rem; margin: 20px 0;
+      position: relative;
+    }
+
+    .divider::before, .divider::after {
+      content: ''; position: absolute; top: 50%;
+      width: 40%; height: 1px; background: var(--border);
+    }
+
+    .divider::before { right: 0; }
+    .divider::after { left: 0; }
+
+    .plan-badge {
+      text-align: center; margin-top: 20px;
+      padding: 12px; background: rgba(14,165,233,0.08);
+      border: 1px solid rgba(14,165,233,0.2);
+      border-radius: 10px; font-size: 0.82rem;
+      color: var(--text-muted); line-height: 1.6;
+    }
+
+    .plan-badge strong { color: var(--primary); }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">
+    <div class="logo-icon">💊</div>
+    <h1>PharmAI</h1>
+    <p>المساعد الصيدلاني الذكي</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('login')">تسجيل الدخول</button>
+    <button class="tab" onclick="switchTab('register')">حساب جديد</button>
+  </div>
+
+  <div id="msg" class="msg"></div>
+
+  <!-- Login Form -->
+  <form id="login-form" onsubmit="doLogin(event)">
+    <div class="form-group">
+      <label>البريد الإلكتروني</label>
+      <input type="email" id="login-email" placeholder="pharmacist@example.com" required />
+    </div>
+    <div class="form-group">
+      <label>كلمة المرور</label>
+      <input type="password" id="login-pass" placeholder="••••••••" required />
+    </div>
+    <button class="btn" type="submit" id="login-btn">دخول</button>
+  </form>
+
+  <!-- Register Form -->
+  <form id="register-form" style="display:none" onsubmit="doRegister(event)">
+    <div class="form-group">
+      <label>البريد الإلكتروني</label>
+      <input type="email" id="reg-email" placeholder="pharmacist@example.com" required />
+    </div>
+    <div class="form-group">
+      <label>كلمة المرور</label>
+      <input type="password" id="reg-pass" placeholder="8 أحرف على الأقل" minlength="8" required />
+    </div>
+    <button class="btn" type="submit" id="reg-btn">إنشاء حساب</button>
+  </form>
+
+  <div class="plan-badge">
+    <strong>7 أيام مجاناً</strong> · ثم 29 ₪/شهر أو 249 ₪/سنة<br>
+    وصول كامل لقاعدة الأدوية + التفاعلات + المساعد الذكي
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  // ─── Replace with your Supabase project credentials ───────────────────────
+  const SUPABASE_URL = 'https://unbcyohxirvefixfzuql.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVuYmN5b2h4aXJ2ZWZpeGZ6dXFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxMzUzNTAsImV4cCI6MjA5MjcxMTM1MH0.ZNa9L4uqWi3uuV2WKwPd0p2tELHQdaxQ6_48vfjcDd8';
+  // ──────────────────────────────────────────────────────────────────────────
+
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // Redirect if already logged in
+  supabase.auth.getSession().then(({ data: { session } }) => {
+    if (session) window.location.href = 'index.html';
+  });
+
+  function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach((t, i) => {
+      t.classList.toggle('active', (i === 0) === (tab === 'login'));
+    });
+    document.getElementById('login-form').style.display  = tab === 'login'    ? '' : 'none';
+    document.getElementById('register-form').style.display = tab === 'register' ? '' : 'none';
+    hideMsg();
+  }
+
+  function showMsg(text, type) {
+    const el = document.getElementById('msg');
+    el.textContent = text;
+    el.className = `msg ${type}`;
+  }
+
+  function hideMsg() {
+    const el = document.getElementById('msg');
+    el.className = 'msg';
+  }
+
+  async function doLogin(e) {
+    e.preventDefault();
+    const btn = document.getElementById('login-btn');
+    btn.disabled = true; btn.textContent = 'جاري الدخول...';
+    hideMsg();
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email: document.getElementById('login-email').value,
+      password: document.getElementById('login-pass').value,
+    });
+
+    if (error) {
+      showMsg(error.message === 'Invalid login credentials' ? 'بيانات الدخول غير صحيحة' : error.message, 'error');
+    } else {
+      showMsg('جاري التوجيه...', 'success');
+      setTimeout(() => window.location.href = 'index.html', 800);
+    }
+
+    btn.disabled = false; btn.textContent = 'دخول';
+  }
+
+  async function doRegister(e) {
+    e.preventDefault();
+    const btn = document.getElementById('reg-btn');
+    btn.disabled = true; btn.textContent = 'جاري الإنشاء...';
+    hideMsg();
+
+    const { error } = await supabase.auth.signUp({
+      email: document.getElementById('reg-email').value,
+      password: document.getElementById('reg-pass').value,
+    });
+
+    if (error) {
+      showMsg(error.message, 'error');
+    } else {
+      showMsg('تم الإنشاء! تحقق من بريدك لتأكيد الحساب.', 'success');
+    }
+
+    btn.disabled = false; btn.textContent = 'إنشاء حساب';
+  }
+</script>
+</body>
+</html>
