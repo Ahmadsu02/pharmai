@@ -2,7 +2,13 @@ import os
 import json
 from groq import AsyncGroq
 
-client = AsyncGroq(api_key=os.environ.get("GROQ_API_KEY"))
+_client = None
+
+def get_client() -> AsyncGroq:
+    global _client
+    if _client is None:
+        _client = AsyncGroq(api_key=os.environ.get("GROQ_API_KEY", ""))
+    return _client
 
 CHAT_SYSTEM = """أنت مساعد صيدلاني ذكي متخصص. مهمتك الوحيدة مساعدة الصيادلة في الأسئلة الصيدلانية والطبية فقط.
 
@@ -30,7 +36,7 @@ Return [] if no specific drug is mentioned. Return ONLY the JSON array, nothing 
 
 
 async def extract_drug_names(message: str) -> list[str]:
-    response = await client.chat.completions.create(
+    response = await get_client().chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages=[
             {"role": "system", "content": EXTRACT_SYSTEM},
@@ -109,7 +115,7 @@ async def chat_with_context(
         messages.extend(history[-10:])  # last 10 turns to stay within token limits
     messages.append({"role": "user", "content": message})
 
-    response = await client.chat.completions.create(
+    response = await get_client().chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages=messages,
         temperature=0.3,
